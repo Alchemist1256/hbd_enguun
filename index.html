@@ -191,7 +191,6 @@ document.addEventListener("click", () => {
         </div>
 
         <div id="content">
-            <!-- Step 1: Initial Reveal -->
             <div class="step active" id="step1">
                 <div class="emoji heart-beat">❤️</div>
                 <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gradient">Hi huurhnuu</h1>
@@ -199,7 +198,6 @@ document.addEventListener("click", () => {
                 <button class="btn" id="start-btn">Let's Begin</button>
             </div>
 
-            <!-- Step 2: Birthday Message -->
             <div class="step" id="step2">
                 <div class="emoji">🎉</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Happy Birthday!</h2>
@@ -209,7 +207,6 @@ document.addEventListener("click", () => {
                 <button class="btn" id="next-btn-2">What makes you special?</button>
             </div>
 
-            <!-- Step 3: Reasons You're Amazing -->
             <div class="step" id="step3">
                 <h2 class="text-3xl md:text-4xl font-bold mb-8 text-gradient">Here's why you're incredible</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
@@ -234,7 +231,6 @@ document.addEventListener("click", () => {
                 <button class="btn" id="next-btn-3">A Little Surprise</button>
             </div>
 
-            <!-- Step 4: Memory Lane -->
             <div class="step" id="step4">
                 <div class="emoji">📸</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient"></h2>
@@ -249,7 +245,6 @@ document.addEventListener("click", () => {
                 <button class="btn" id="next-btn-4">One Last Thing</button>
             </div>
 
-            <!-- Step 5: Final Wish -->
             <div class="step" id="step5">
                 <div class="emoji">🎂</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">My Birthday Wish For You</h2>
@@ -266,7 +261,6 @@ document.addEventListener("click", () => {
     </div>
 
     <script>
-        // Three.js Heart Background
         const container = document.getElementById('canvas-container');
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -276,7 +270,6 @@ document.addEventListener("click", () => {
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.z = 30;
 
-        // Improved Heart Geometry
         const x = 0, y = 0;
         const heartShape = new THREE.Shape();
         heartShape.moveTo(x + 0.5, y + 0.5);
@@ -297,7 +290,6 @@ document.addEventListener("click", () => {
 
         const heartGeometry = new THREE.ExtrudeGeometry(heartShape, extrudeSettings);
 
-        // Create multiple hearts with different colors and properties
         const hearts = [];
         const colors = [
             0xff6b6b, 0xff8e8e, 0xffb3b3, 0xffd8d8,
@@ -316,7 +308,6 @@ document.addEventListener("click", () => {
 
             const heart = new THREE.Mesh(heartGeometry, material);
 
-            // Random position and scale
             heart.position.x = (Math.random() - 0.5) * 50;
             heart.position.y = (Math.random() - 0.5) * 50;
             heart.position.z = (Math.random() - 0.5) * 50;
@@ -345,7 +336,6 @@ document.addEventListener("click", () => {
             hearts.push(heart);
         }
 
-        // Add lights
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
         scene.add(ambientLight);
 
@@ -353,19 +343,18 @@ document.addEventListener("click", () => {
         directionalLight.position.set(1, 1, 1);
         scene.add(directionalLight);
 
-        // Animation loop
+        
         function animate() {
             requestAnimationFrame(animate);
 
             // Animate hearts
             hearts.forEach(heart => {
-                // Floating animation
+                // 
                 const time = Date.now() * 0.001;
                 heart.position.x = heart.userData.originalX + Math.sin(time * heart.userData.speedX * 10) * heart.userData.floatDistance;
                 heart.position.y = heart.userData.originalY + Math.sin(time * heart.userData.speedY * 10) * heart.userData.floatDistance;
                 heart.position.z = heart.userData.originalZ + Math.sin(time * heart.userData.speedZ * 10) * heart.userData.floatDistance;
 
-                // Rotation
                 heart.rotation.x += heart.userData.rotationSpeedX;
                 heart.rotation.y += heart.userData.rotationSpeedY;
             });
@@ -375,14 +364,12 @@ document.addEventListener("click", () => {
 
         animate();
 
-        // Handle window resize
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Step Navigation
         let currentStep = 1;
         const totalSteps = 5;
 
@@ -392,24 +379,19 @@ document.addEventListener("click", () => {
         }
 
         function showStep(stepNumber) {
-            // Hide all steps
             document.querySelectorAll('.step').forEach(step => {
                 step.classList.remove('active');
             });
 
-            // Show current step
             document.getElementById(`step${stepNumber}`).classList.add('active');
 
-            // Update progress bar
             updateProgressBar();
 
-            // Special effect for last step
             if (stepNumber === totalSteps) {
                 document.getElementById('confetti-btn').classList.add('animate-pulse');
             }
         }
 
-        // Button event listeners
         document.getElementById('start-btn').addEventListener('click', () => {
             currentStep = 2;
             showStep(currentStep);
@@ -430,9 +412,7 @@ document.addEventListener("click", () => {
             showStep(currentStep);
         });
 
-        // Confetti button
         document.getElementById('confetti-btn').addEventListener('click', () => {
-            // Standard confetti
             confetti({
                 particleCount: 150,
                 spread: 70,
@@ -440,7 +420,6 @@ document.addEventListener("click", () => {
                 colors: ['#ff0000', '#ff69b4', '#ff1493', '#ffc0cb']
             });
 
-            // Heart-shaped confetti
             setTimeout(() => {
                 confetti({
                     particleCount: 30,
@@ -451,7 +430,6 @@ document.addEventListener("click", () => {
                 });
             }, 300);
 
-            // More hearts from different directions
             setTimeout(() => {
                 confetti({
                     particleCount: 20,
@@ -472,7 +450,6 @@ document.addEventListener("click", () => {
                 });
             }, 600);
 
-            // Make hearts float up from the background
             hearts.forEach(heart => {
                 gsap.to(heart.position, {
                     y: heart.position.y - 30,
@@ -488,9 +465,9 @@ document.addEventListener("click", () => {
             });
         });
 
-        // Initialize progress bar
         updateProgressBar();
     </script>
 </body>
+
 
 </html>
